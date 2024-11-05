@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+	"time"
+)
 
 func main() {
 	// A10.1 IF
@@ -29,5 +33,61 @@ func main() {
 	if result, ok := cache[input]; ok { // コロンの後はbool型が必要
 		fmt.Println("cached value :", result) //もし変数okがtrueなら実行
 	}
+
+	// A10.2 for
+	// Goのforでよく使うのはrangeを用いたスライスやMAPの全取得ループ
+	// スライスはインデックスと値、MAPはキーと値がループ変数に格納される
+
+	// rangeを利用したfor
+	sketches := []string{"Dead Parrot", "Killer joke", "Mona Lisa", "Spanish Inquisition", "Spam"}
+	for i, s := range sketches {
+		fmt.Println(i, s)
+	}
+
+	// 変数を1つだけ書いた場合はインデックス・キーが取り出される。
+	for i := range sketches {
+		fmt.Println("i =", i)
+	}
+	// 値だけを利用したい場合、ブランク識別子_を使って読み飛ばす。
+	// ブランク識別子_を使うと、未定義エラーにならない。読み飛ばす用途として明示できる。
+	for _, s := range sketches {
+		fmt.Println("s =", s)
+	}
+
+	// ループ内ではbreakを使った強制終了、continueを利用した処理のスキップを実装可能
+	for _, s := range sketches {
+		//スケッチ名がKから始まっている場合,読み飛ばす
+		if strings.HasPrefix(s, "K") {
+			continue
+		}
+		//スケッチ名がnで終わっている場合,ループ終了
+		if strings.HasSuffix(s, "n") {
+			break
+		}
+		fmt.Println(s)
+	}
+
+	// bool型を１つだけ持つforループで、条件を満たす間は回り続ける。
+	counter := 0
+	for counter < 10 {
+		fmt.Println("counter =", counter)
+		counter += 1
+	}
+
+	// すべて省略するループは無限ループになる。
+	end := time.Now().Add(time.Second)
+	for {
+		fmt.Println("time =", time.Now())
+		if end.Before(time.Now()) {
+			break
+		}
+	}
+
+	// ループ変数を使った、プリミティブ(原始的)なforループ
+	for i := 0; i < 10; i++ {
+		fmt.Println("10回繰り返す")
+	}
+
+	// A10.3 switch
 
 }

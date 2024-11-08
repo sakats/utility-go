@@ -89,5 +89,27 @@ func main() {
 	}
 
 	// A10.3 switch
+	var s string = "running"
+	switch s {
+	case "running":
+		fmt.Println("実行中")
+	case "stop":
+		fmt.Println("停止中")
+	default:
+		fmt.Println("その他")
+	}
+
+	// ほかの言語と異なるのが、1つのケースにマッチした後はswitchを抜ける所。
+	// もし次の節に処理を継続したい場合、fallthroughを記載する
+	switch s {
+	case "running":
+		fallthrough // runningと記載しても"run"へ続く
+	case "run":
+		fmt.Println("実行中")
+	case "stop":
+		fmt.Println("停止中")
+	default:
+		fmt.Println("その他")
+	}
 
 }
